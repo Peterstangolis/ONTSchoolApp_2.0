@@ -135,7 +135,7 @@ top_10_schools.reset_index(inplace = True)
 fig13 = go.Figure(data=[
     go.Table(
         columnorder = [1, 2],
-        columnwidth = [200, 80],
+        columnwidth = [200, 50],
         header=dict(values=[['<b>SCHOOL</b>'],['<b>CASES</b>']],
                 line_color='#F8F9F9',
                 fill_color='#04ADBF',
@@ -147,13 +147,13 @@ fig13 = go.Figure(data=[
                line_color='#F8F9F9',
                fill_color=[['#F5F5F5','#D9D9D9']* len(top_10_schools)],
                align=['left', 'center'],
-               font = dict(color = '#154360', size = 14, family = "Helvetica"),
+               font = dict(color = '#595959', size = 14, family = "Helvetica"),
                height = 25)
     )])
-fig13.update_layout(autosize=False, width = 500, height = 450,
+fig13.update_layout(autosize=False, width = 430, height = 450,
                     margin=dict(
-                    l=20,
-                    r=20,
+                    l=10,
+                    r=10,
                     b=20,
                     t=20,
                     pad=4))
@@ -237,7 +237,7 @@ layout = html.Div(
             html.Div(
                 [
                 html.Label(id = "breakdown", children = f"COVID-19 Case Breakdown on {max(df_active.reported_date).date()}",
-                            style = {"fontSize" : "18px", "font-weight" : "bold", "padding" : "10px", "padding-left" : "20px", "fontFamily" : "Helvetica"}
+                            style = {"fontSize" : "16px", "font-weight" : "bold", "padding" : "10px", "padding-left" : "20px", "fontFamily" : "Helvetica", 'color' : '#595959'}
                         ),
                             ],
                         className = "six columns",
@@ -245,7 +245,7 @@ layout = html.Div(
                                 'box-shadow': '5px 5px 5px grey',
                                 'background-color': '#F2F2F2',
                                 'border' : '1px solid #BFBFBF',
-                                'padding' : "5px", "margin-left" : "10px", "width" : "45%", "margin-top" : "20px", "margin-bottom" : "20px"}
+                                'padding' : "5px", "margin-left" : "10px", "width" : "44%", "margin-top" : "20px", "margin-bottom" : "20px"}
                             ),
 
             html.Div(
@@ -263,7 +263,7 @@ layout = html.Div(
                                     'border' : '1px solid #BFBFBF',
                                     #'margin-bottom' : '20px'
                                     }),
-                                    ], className = "one columns", style = {"margin" : "10px", "width" : "11%"}),
+                                    ], className = "one columns", style = {"margin" : "10px", "width" : "10%"}),
 
                 html.Div([
                             dcc.Graph(
@@ -281,7 +281,7 @@ layout = html.Div(
                                     'box-shadow': '5px 5px 5px grey',
                                     'border' : '1px solid #BFBFBF'}
                                 ),
-                                ], className = "one columns", style = {"margin" : "10px", "width" : "11%"}),
+                                ], className = "one columns", style = {"margin" : "10px", "width" : "10%"}),
 
                 html.Div([
                            dcc.Graph(
@@ -299,7 +299,7 @@ layout = html.Div(
                                    'box-shadow': '5px 5px 5px grey',
                                    'border' : '1px solid #BFBFBF'}
                                   )
-                                  ], className = "one columns", style = {"margin" : "10px", "width" : "11%"}),
+                                  ], className = "one columns", style = {"margin" : "10px", "width" : "10%"}),
 
                 html.Div([
                             dcc.Graph(
@@ -313,7 +313,7 @@ layout = html.Div(
                                     'border' : '1px solid #BFBFBF',
                                     'background' : '#F2F2F2', "left-margin" : "60px"}
                                     )
-                                ], className = "one columns", style = {"margin" : "10px", "width" : "11%"})
+                                ], className = "one columns", style = {"margin" : "10px", "width" : "10%"})
 
                         ], className = "row", style = {}),
 
@@ -323,7 +323,7 @@ layout = html.Div(
                 html.Div(
                 [
                     html.Label(id = "graph1", children = "% of Schools in School Board with at least 1 Confirmed COVID-19 Case",
-                                style = {"padding" : "5px", "fontFamily" : "Helvetica", "font-weight" : "bold", "size" : 14, "margin=left" : "20px"}),
+                                style = {"padding" : "5px", "fontFamily" : "Helvetica", "font-weight" : "bold", "size" : 14, "margin=left" : "20px", 'color' : '#595959'}),
                     dcc.Graph(
                         id = "perc_schools",
                         figure = {},
@@ -342,7 +342,7 @@ layout = html.Div(
                 html.Div(
                 [
                     html.Label("COVID-19 Cases per 100k Students Based on 5 Day Moving Average",
-                                style = {"padding" : "5px", "fontFamily" : "Helvetica", "font-weight" : "bold", "size" : 14, "margin=left" : "20px"}),
+                                style = {"padding" : "5px", "fontFamily" : "Helvetica", "font-weight" : "bold", "size" : 14, "margin=left" : "20px", 'color' : '#595959' }),
                     dcc.Graph(
                         id = "cases-per",
                         figure = {}
@@ -362,7 +362,7 @@ layout = html.Div(
                 html.Div(
                 [
                     html.Label("Ontario Schools with >= 5 Active, Confirmed COVID-19 Cases",
-                                style = {"padding" : "5px", "fontFamily" : "Helvetica", "font-weight" : "bold", "margin-left" : "10px" }),
+                                style = {"padding" : "5px", "fontFamily" : "Helvetica", "font-weight" : "bold", "margin-left" : "10px", 'color' : '#595959', 'size' : 14 }),
                     dcc.Graph(
                     id = "table",
                     figure = fig13,
@@ -375,7 +375,7 @@ layout = html.Div(
                             #'border-left' : '4px solid #85C1E9',
                             'border-radius' : '5px',
                             'box-shadow': '5px 5px 5px grey',
-                            'border' : '1px solid #F2F2F2', "margin-left" : "50px", "width" : "28%"}
+                            'border' : '1px solid #F2F2F2', "margin-left" : "50px", "width" : "30%"}
                 ),
                 ], className = "row", style = {"margin-left" : "40px", "margin-top" : "20px", "margin-right" : "1px"}
                 ),
@@ -419,8 +419,8 @@ def municipality_schools(municipality):
      go.Indicator(
         mode = 'number',
         value = schools_in_mun,
-        title = {"text" : " <br><span style = 'font-size: 1.1em; color:#595959'># SCHOOLS <br>WITH CASES</span>"},
-        number = {"font" : {"size" : 45, "color" : "#04ADBF"}}))
+        title = {"text" : " <br><span style = 'font-size: 1.0em; color:#595959'># SCHOOLS <br>WITH CASES</span>"},
+        number = {"font" : {"size" : 42, "color" : "#04ADBF"}}))
     figure.layout.plot_bgcolor = '#F2F4F4'
     figure.layout.paper_bgcolor = '#F2F4F4'
     return figure
@@ -439,8 +439,8 @@ def school_metric1(school):
                 mode = 'number',
                 value = students,
                 #delta = {'reference' : students},
-                title = {"text" : " <br><span style = 'font-size: 1.1em; color:#FFFFFF'>STUDENT</span>"},
-                number = {"font" : {"size" : 45, "color" : "#F2F2F2"}}))
+                title = {"text" : " <br><span style = 'font-size: 1.0em; color:#FFFFFF'>STUDENT</span>"},
+                number = {"font" : {"size" : 42, "color" : "#F2F2F2"}}))
         figure.layout.plot_bgcolor = '#04ADBF'
         figure.layout.paper_bgcolor = '#04ADBF'
         return figure
@@ -458,8 +458,8 @@ def school_metric2(school):
             mode = 'number',
             value = staff,
             #delta = {'reference' : staff},
-            title = {"text" : " <br><span style = 'font-size: 1.1em; color:#FFFFFF'>STAFF</span>"},
-            number = {"font" : {"size" : 45, "color" : "#F2F2F2"}}))
+            title = {"text" : " <br><span style = 'font-size: 1.0em; color:#FFFFFF'>STAFF</span>"},
+            number = {"font" : {"size" : 42, "color" : "#F2F2F2"}}))
     figure.layout.plot_bgcolor = '#04ADBF'
     figure.layout.paper_bgcolor = '#04ADBF'
     return figure
@@ -475,8 +475,8 @@ def municipality_cases(municipality):
         go.Indicator(
             mode = 'number',
             value = cases,
-            title = {"text" : f" <span style = 'font-size: 1.1em; color:#595959'>CONFIRMED CASES IN <b><br> {municipality}:</span>"},
-            number = {"font" : {"size" : 45, "color" : '#04ADBF'}}))
+            title = {"text" : f" <span style = 'font-size: 1.0em; color:#595959'>CONFIRMED CASES IN <b><br> {municipality}:</span>"},
+            number = {"font" : {"size" : 42, "color" : '#04ADBF'}}))
     figure.layout.plot_bgcolor = '#F2F4F4'
     figure.layout.paper_bgcolor = '#F2F4F4'
     return figure

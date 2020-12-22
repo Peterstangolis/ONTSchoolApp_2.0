@@ -189,9 +189,8 @@ df_summary.rename(columns = {"cumulative_school_related_cases" : "Cumulative Tot
 ### Number of schools in ONT that have had at least 1 covid case:
 schl_total = max(df_summary['current_total_number_schools'])
 s = df_active["School"].nunique()
-print(s)
+
 perc_schl = round(s / schl_total, 1) * 100
-print(perc_schl)
 
 
 
@@ -325,7 +324,7 @@ fig11.add_trace(
 #         family = "Verdana",
 #         size = 14,
 #         color = 'black'))
-fig11.update_xaxes(title_text = "Reported Date", showgrid=False, gridcolor = '#2E86C1',
+fig11.update_xaxes( showgrid=False, gridcolor = '#2E86C1',
                   showline = True, zerolinewidth = 0.8, linecolor = 'lightgrey')
 fig11.update_yaxes(title_text = "Avg COVID-19 Cases", showgrid = True, gridcolor = 'lightgrey')
 
@@ -387,7 +386,7 @@ layout = html.Div(
             html.Label(f"In the timeframe of the first reported date; {min(df_active.reported_date).date()} to the last reported date; {max(df_active.reported_date).date()}, of the {schl_total} ONT Schools, {s} or {perc_schl}% have had at least 1 confirmed case. ",
                         style = {"color" : "#595959", "fontSize" :"14px", "padding" : "15px", 'border-bottom' : '1px sold #595959'},
                         className = "five columns"),
-        ], className = "row"),
+        ], className = "row", style = {'margin-left' : '20px'}),
 
         # Section of Metrics:
         html.Div(
@@ -592,7 +591,7 @@ layout = html.Div(
                                     'width' : '80%'}
                             ),
 
-                 html.Label("Cumulative COVID-19 Cases in Ontario Schools vs Daily Reported Cases (Total, Staff & Student)",
+                 html.Label("CUMULATIVE COVID-19 CASES IN ONTARIO SCHOOLS VS DAILY REPORTED CASE TOTALS",
                     style = {"fontSize" : "16px", "color" : "#595959", "margin-left" : "20px", "margin-top" : "20px",
                             "font-weight" : "bold", 'border-top' : '1px solid lightgrey'}),
 
@@ -600,7 +599,7 @@ layout = html.Div(
                 dcc.Graph(
                             id="line-graph",
                             figure = {
-                                "layout" : {"height" : 390}
+                                "layout" : {"height" : 365}
                             },
                             style = {"margin-bottom" : "0px"})
 
@@ -612,7 +611,7 @@ layout = html.Div(
 
 
              html.Div([
-                html.Label("5 - DAY MOVING AVERAGE OF DAILY CASES AMONG STAFF, STUDENTS & UNSPECIFIED", style = {"fontSize" : "18px", "color": "#595959", 'font-weight' : 'bold',
+                html.Label("5 - DAY MOVING AVERAGE AMONGST STAFF, STUDENTS & UNSPECIFIED CASES", style = {"fontSize" : "16px", "color": "#595959", 'font-weight' : 'bold',
                                                     "padding" : "20px", "textAlign" : "left",
                                                     'border-bottom' : '1px solid lightgrey'}),
 
@@ -639,7 +638,7 @@ layout = html.Div(
                         'font-size' : '18px',
                         'font-variant-caps': 'small-caps'
                     })
-                    ], style = {"padding-left" : "30px", 'backgroundColor' : "#04ADBF"}
+                    ], style = {"padding-left" : "30px", 'backgroundColor' : "#04ADBF", "padding-top" : "10px", "padding-bottom" : "10px"}
                     )
 
 
