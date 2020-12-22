@@ -186,6 +186,15 @@ for i in range(0, df_summary.shape[0]-4):
 df_summary.rename(columns = {"new_total_school_related_cases" : "New Total Cases", "new_school_related_student_cases" : "New Student", "new_school_related_staff_cases":"New Staff"}, inplace=True)
 df_summary.rename(columns = {"cumulative_school_related_cases" : "Cumulative Total", "cumulative_school_related_student_cases" : "Cumulative Student", "cumulative_school_related_staff_cases" : "Cumulative Staff"}, inplace=True)
 
+### Number of schools in ONT that have had at least 1 covid case:
+schl_total = max(df_summary['current_total_number_schools'])
+s = df_active["School"].nunique()
+print(s)
+perc_schl = round(s / schl_total, 1) * 100
+print(perc_schl)
+
+
+
 
 ## New Reported Cases Today Metric1
 fig2 = go.Figure()
@@ -193,8 +202,8 @@ fig2.add_trace(go.Indicator(
         value = value_t,
         delta = {'reference': reference_t, 'increasing': {'color': "#BF2D17"}, 'decreasing' : {'color' : '#1D6DF2'}},
         mode = "number+delta",
-        title = {"text" : " <br><span style = 'font-size: 1.0em; color:#595959'><b>REPORTED CASES <BR> TODAY</span>"},
-        number = {"font" : {"size" : 45, 'color' : '#04ADBF'}}
+        title = {"text" : " <br><span style = 'font-size: 0.9em; color:#595959'><b>REPORTED CASES </span>"},
+        number = {"font" : {"size" : 42, 'color' : '#04ADBF'}}
     )
               ),
 fig2.layout.paper_bgcolor = '#F2F2F2'
@@ -208,7 +217,7 @@ fig3.add_trace(
         delta = {'reference': reference_student, 'increasing': {'color': "#BF2D17"}, 'decreasing' : {'color' : '#1D6DF2'}},
         mode = "number+delta",
         title = {"text" : " <br><span style = 'font-size: 1.0em; color:#595959'><b>STUDENTS</span>"},
-        number = {"font" : {"size" : 45, 'color' : '#04ADBF'}},
+        number = {"font" : {"size" : 42, 'color' : '#04ADBF'}},
         domain = {'row': 0, 'column' : 0},
      )
 ),
@@ -223,7 +232,7 @@ fig4.add_trace(
         value = value_staff,
         delta = {"reference": reference_staff, 'increasing': {'color': "#BF2D17"}, 'decreasing' : {'color' : '#1D6DF2'}},
         title = {"text" : " <br><span style = 'font-size: 1.0em; color:#595959'><b>STAFF</span>"},
-        number = {"font" : {"size" : 45, 'color': '#04ADBF'}}
+        number = {"font" : {"size" : 42, 'color': '#04ADBF'}}
     )
 ),
 fig4.layout.paper_bgcolor = '#F2F2F2'
@@ -235,8 +244,8 @@ fig5.add_trace(
         mode = 'number+delta',
         value = schools_w_cases,
         delta = {'reference' : y_schools_w_cases, 'increasing': {'color': "#BF2D17"}, 'decreasing' : {'color' : '#1D6DF2'}},
-        title = {"text" : " <br><span style = 'font-size: 1.0em; color:#FFFFFF'><b>SCHOOLS WITH <br>ACTIVE CASES</span>"},
-        number = {"font" : {"size" : 45, 'color': '#F2F2F2'}}
+        title = {"text" : " <br><span style = 'font-size: 0.9em; color:#FFFFFF'><b>SCHOOLS W/ <br>ACTIVE CASES</span>"},
+        number = {"font" : {"size" : 42, 'color': '#F2F2F2'}}
     )
 ),
 fig5.layout.paper_bgcolor = '#04ADBF'
@@ -249,7 +258,7 @@ fig6.add_trace(
         value = value,
         delta = {'reference' : value_yest, 'increasing': {'color': "#BF2D17"}, 'decreasing' : {'color' : '#1D6DF2'}},
         title = {"text" : " <br><span style = 'font-size: 1.0emm; color:#FFFFFF'><b>SCHOOLS CLOSED</span>"},
-        number = {"font" : {"size" : 45, 'color': '#F2F2F2'}})
+        number = {"font" : {"size" : 42, 'color': '#F2F2F2'}})
 ),
 fig6.layout.plot_bgcolor = '#04ADBF'
 fig6.layout.paper_bgcolor = '#04ADBF'
@@ -261,7 +270,7 @@ fig7.add_trace(
         mode = 'number',
         value = schools_w_two_or_more,
         title = {"text" : " <br><span style = 'font-size: 1.0em; color:#FFFFFF'><b>SCHOOLS WITH >= 2 <br>ACTIVE CASES</span>"},
-        number = {"font" : {"size" : 45, 'color': '#F2F2F2'}}
+        number = {"font" : {"size" : 42, 'color': '#F2F2F2'}}
 )),
 fig7.layout.plot_bgcolor = '#04ADBF'
 fig7.layout.paper_bgcolor = '#04ADBF'
@@ -371,11 +380,14 @@ layout = html.Div(
             ),
 
         # labels
-        html.Div(
+        html.Div([
             html.Label("*Newly reported COVID-19 Cases based on the last reported date.  Change from previous day cases noted.",
-                        style = {"color" : "#595959", "fontSize" :"14px", "padding" : "15px", 'border-bottom' : '1px sold #595959'}),
-                        className = "6 columns"
-        ),
+                        style = {"color" : "#595959", "fontSize" :"14px", "padding" : "15px", 'border-bottom' : '1px sold #595959'},
+                        className = "six columns"),
+            html.Label(f"In the timeframe of the first reported date; {min(df_active.reported_date).date()} to the last reported date; {max(df_active.reported_date).date()}, of the {schl_total} ONT Schools, {s} or {perc_schl}% have had at least 1 confirmed case. ",
+                        style = {"color" : "#595959", "fontSize" :"14px", "padding" : "15px", 'border-bottom' : '1px sold #595959'},
+                        className = "five columns"),
+        ], className = "row"),
 
         # Section of Metrics:
         html.Div(
@@ -385,7 +397,7 @@ layout = html.Div(
                     id = 'metric1',
                     figure = fig2,
                     style = {
-                        'width' : '18vh', 'height' : '13vh',
+                        'width' : '17vh', 'height' : '14vh',
                         #'margin-bottom' : '20px',
                         #'margin-top' : '20px',
                         'margin-left' : '30px',
@@ -414,7 +426,7 @@ layout = html.Div(
                     id = 'metric2',
                     figure = fig3,
                     style = {
-                        'width' : '18vh', 'height' : '13vh',
+                        'width' : '17vh', 'height' : '14vh',
                         #'margin-bottom' : '20px',
                         #'margin-top' : '20px',
                         'margin-left' : '10px',
@@ -442,7 +454,7 @@ layout = html.Div(
                     id = 'metric3',
                     figure = fig4,
                     style = {
-                        'width' : '18vh', 'height' : '13vh',
+                        'width' : '17vh', 'height' : '14vh',
                         #'margin-bottom' : '20px',
                         #'margin-top' : '20px',
                         #'margin-left' : '10px',
@@ -469,9 +481,9 @@ layout = html.Div(
                     id = 'metric4',
                     figure = fig5,
                     style = {
-                        'width' : '18vh', 'height' : '13vh',
+                        'width' : '17vh', 'height' : '14vh',
                         #'margin-bottom' : '20px',
-                        #'margin-top' : '20px',
+                        #'margin-top' : '10px',
                         #'margin-left' : '10px',
                         #'margin-right' : '20px',
                         #'background' : '#85C1E9',
@@ -484,7 +496,6 @@ layout = html.Div(
                         'background-color': '#F2F2F2',
                         'border' : '1px solid #BFBFBF',
                         'padding' : '5px',
-                        #'padding': '10px',
                         #'margin-bottom': '10px',
                         #'margin-left': '10px'
                     }),
@@ -497,7 +508,7 @@ layout = html.Div(
                     id = 'metric5',
                     figure = fig6,
                     style = {
-                        'width' : '18vh', 'height' : '13vh',
+                        'width' : '17vh', 'height' : '14vh',
                         #'margin-bottom' : '20px',
                         #'margin-top' : '20px',
                         #'margin-left' : '10px',
@@ -526,11 +537,11 @@ layout = html.Div(
                     id = 'metric6',
                     figure = fig7,
                     style = {
-                        'width' : '18vh', 'height' : '13vh',
+                        'width' : '17vh', 'height' : '14vh',
                         #'margin-bottom' : '20px',
                         #'margin-top' : '20px',
-                        'margin-left' : '10px',
-                        #'margin-right' : '20px',
+                        #'margin-left' : '10px',
+                        'margin-right' : '10px',
                         #'background' : '#85C1E9',
                         #'padding' : '10px',
                         #'border-bottom' : '4px solid #85C1E9',
@@ -588,13 +599,16 @@ layout = html.Div(
 
                 dcc.Graph(
                             id="line-graph",
-                            figure = {})
+                            figure = {
+                                "layout" : {"height" : 390}
+                            },
+                            style = {"margin-bottom" : "0px"})
 
                  ], className = "six columns", style = {"backgroundColor" : "#F2F2F2", 'border-radius': '5px',
                                                         'box-shadow': '5px 5px 5px grey',
                                                         'background-color': '#F2F2F2',
                                                         'border' : '1px solid #BFBFBF',
-                                                        'padding' : '5px', 'margin-bottom' : '100px'}),
+                                                        'padding' : '5px', "height" : 'auto'}),
 
 
              html.Div([
@@ -607,14 +621,16 @@ layout = html.Div(
                                                     'box-shadow': '5px 5px 5px grey',
                                                     'background-color': '#F2F2F2',
                                                     'border' : '1px solid #BFBFBF',
-                                                    'padding' : '5px',})
+                                                    'padding' : '5px', 'height' : 'auto'})
 
              ], className = "row",
-                style = {"backgroundColor" : "#D9D9D9", 'padding-right' : '30px', 'padding-left' : '30px', 'padding-top' : '20px'}),
+                style = {"backgroundColor" : "#D9D9D9", 'padding-right' : '30px', 'padding-left' : '30px', 'padding-top' : '20px', 'padding-bottom' : '20px'}),
 
     html.Div([
         html.Footer(""),
-        html.A("Data Source", href="https://data.ontario.ca/dataset/summary-of-cases-in-schools",
+        html.P("*The data for the metrics and graphs were aquired from the Government of Ontario's Website below:",
+                style = {"font-size" : "14", 'fontFamily' : 'Helvetica', 'color' : '#D9D9D9'}),
+        html.A("Source", href="https://data.ontario.ca/dataset/summary-of-cases-in-schools",
                     target = "_blank",
                     style = {
                         'textAlign' : 'center',
@@ -623,7 +639,7 @@ layout = html.Div(
                         'font-size' : '18px',
                         'font-variant-caps': 'small-caps'
                     })
-                    ], style = {"padding" : "20px", 'backgroundColor' : "#04ADBF"}
+                    ], style = {"padding-left" : "30px", 'backgroundColor' : "#04ADBF"}
                     )
 
 
