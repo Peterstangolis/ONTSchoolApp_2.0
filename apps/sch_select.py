@@ -124,6 +124,10 @@ board_site_index = df_active_now[df_active_now.School.str.contains('Board Site')
 if len(board_site_index) > 0:
     df_active_now = df_active_now.drop(board_site_index)
 
+#### todays date ####
+today = datetime.datetime.now()
+today = today.strftime("%B %d, %Y")
+
 
 ##### TABLE TO GRAPH #####
 top_10_schools = df_active_now.groupby('School')['Active Cases'].sum().reset_index().sort_values(by = "Active Cases", ascending = False)
@@ -145,7 +149,7 @@ fig13 = go.Figure(data=[
                 ),
         cells=dict(values= [top_10_schools[k].tolist() for k in top_10_schools.columns[1:]], # 2nd column
                line_color='#F8F9F9',
-               fill_color=[['#F5F5F5','#D9D9D9']* len(top_10_schools)],
+               fill_color=[['#F5F5F5','white']* len(top_10_schools)],
                align=['left', 'center'],
                font = dict(color = '#595959', size = 14, family = "Helvetica"),
                height = 25)
@@ -177,7 +181,7 @@ layout = html.Div(
                     'color' : 'white',
                     'padding-top' : '20px',
                     #'padding-left': '20px',
-                    'font-size' : '50px',
+                    'font-size' : '45px',
                     #'margin-top' : '10px',
                     'font-weight': 'bold',
                     #'font-family' : 'Monaco',
@@ -204,20 +208,20 @@ layout = html.Div(
 
 
             html.Div([
-                html.Label("Select Municipality to View Stats on Right:",
+                html.Label("SELECT MUNICIPALITY TO VIEW CASES ON RIGHT:",
                            style = {"fontSize" : "18px", "color" : "#595959", 'font-weight' : 'bold',
-                                    "padding" : "20px", "fontFamily" : "Helvetica"}),
+                                    "padding" : "20px", "fontFamily" : "Helvetica", "border-left" : 'medium solid white'}),
                 #html.P("MUNICIPALITY:", style = {"fontSize" : "18px", "color" : "#595959", "padding-left" : "20px", "padding-bottom" : "10px"}),
                 dcc.Dropdown(
                     id = "munic-input",
-                    style = {'width' : '80%',  "padding-left" : "20px"},
+                    style = {'width' : '80%',  "padding-left" : "20px",  "border-left" : 'medium solid white'},
                     options = [{'label': x, 'value': x} for x in municipalities],
                     value= "Toronto"),
-                html.Label("Select School From To View COVID-19 Breakdown on Right:",
-                     style = {"fontSize" : "18px", "color" : "#595959", "font-weight": "bold", "padding" : "20px", "fontFamily" : "Helvetica"}),
+                html.Label("SELECT SCHOOL FROM ABOVE MUNICIPALITY TO VIEW CASES ON RIGHT:",
+                     style = {"fontSize" : "18px", "color" : "#595959", "font-weight": "bold", "padding" : "20px", "fontFamily" : "Helvetica", "border-left" : 'medium solid #04ADBF'}),
                 dcc.Dropdown(
                     id = "school-input",
-                    style = {"width" : "80%", "padding-left" : "20px", "padding-bottom" : "20px"},
+                    style = {"width" : "80%", "padding-left" : "20px", "padding-bottom" : "20px",  "border-left" : 'medium solid #04ADBF'},
                     options = [{'label' : 'William G Miller Junior Public School', 'value' : 'William G Miller Junior Public School'}],
                     value = 'William G Miller Junior Public School'
                     ),
@@ -239,6 +243,9 @@ layout = html.Div(
                 html.Label(id = "breakdown", children = f"COVID-19 Case Breakdown on {max(df_active.reported_date).date()}",
                             style = {"fontSize" : "16px", "font-weight" : "bold", "padding" : "10px", "padding-left" : "20px", "fontFamily" : "Helvetica", 'color' : '#595959'}
                         ),
+
+                html.Label("i. Data obtained from the Government of Ontario website 'Schools COVID-19 Data'",
+                            style = {"fontSize" : "12px", "padding-left" : "10px", "fontFamily" : "Helvetica"}),
                             ],
                         className = "six columns",
                         style = {"backgroundColor" : "#F2F2F2", 'border-radius': '5px',
@@ -328,7 +335,12 @@ layout = html.Div(
                         id = "perc_schools",
                         figure = {},
 
-                )], className = "four columns",
+                ),
+
+                html.P("ii. Data obtained from Ontario Governments Website \n 'Ontario Public School Contact Information', updated Dec 2020",
+                    style = {"fontSize" : "11px", "fontFamily" : "Helvetica",'color' : '#595959', 'padding-left' : '10px' }),
+
+                ], className = "four columns",
                     style = {'background' : '#F2F2F2',
                             'padding' : '5px',
                             #'border-bottom' : '4px solid #85C1E9',
@@ -347,7 +359,13 @@ layout = html.Div(
                         id = "cases-per",
                         figure = {}
 
-                    )
+                    ),
+
+                    html.P("iii. Data obtained from Ontario Governments Website \n 'Ontario Public Schools Enrolment', 2019-2020 academic year",
+                        style = {"fontSize" : "11px", "fontFamily" : "Helvetica",'color' : '#595959', 'padding-left' : '10px' }),
+
+
+
                 ], className = "four columns",
                    style = {'background' : '#F2F2F2',
                      'padding' : '5px',
@@ -366,7 +384,9 @@ layout = html.Div(
                     dcc.Graph(
                     id = "table",
                     figure = fig13,
-                    )
+                    ),
+
+                    html.P("")
                 ], className = "four columns",
                    style = {'background' : '#F2F2F2',
                             'padding' : '5px',
@@ -380,20 +400,65 @@ layout = html.Div(
                 ], className = "row", style = {"margin-left" : "40px", "margin-top" : "20px", "margin-right" : "1px"}
                 ),
 
-
         html.Div([
             html.Footer(""),
-            html.A("Data Source", href="https://data.ontario.ca/dataset/summary-of-cases-in-schools",
+            html.A("I. Source", href="https://data.ontario.ca/dataset/summary-of-cases-in-schools",
                         target = "_blank",
                         style = {
-                            'textAlign' : 'center',
+                            'textAlign' : 'left',
                             'color' :  '#D9D9D9',
                             #'padding-left' : '30px',
-                            'font-size' : '18px',
+                            'font-size' : '12px',
                             'font-variant-caps': 'small-caps'
-                        })
-                        ], className = "twelve columns", style = {"padding" : "15px", 'backgroundColor' : "#04ADBF", "margin-top" : "20px"}
-                        )
+                        }),
+
+            html.Label("Ontario Schools Covid-19 Dataset",
+                        style = {
+                            'textAlign' : 'left',
+                            'color' :  '#D9D9D9',
+                            #'padding-left' : '30px',
+                            'font-size' : '12px',
+                            'font-variant-caps': 'small-caps'}),
+
+            html.A("ii. Source", href= "https://data.ontario.ca/dataset/ontario-public-school-contact-information",
+                    target = "_blank",
+                    style = {
+                        'textAlign' : 'center',
+                        'color' :  '#D9D9D9',
+                        #'padding-left' : '30px',
+                        'font-size' : '12px',
+                        'font-variant-caps': 'small-caps'}),
+
+            html.Label("Ontario Public Schools Contact Information Dataset:",
+                    style = {
+                        'textAlign' : 'left',
+                        'color' :  '#D9D9D9',
+                        #'padding-left' : '30px',
+                        'font-size' : '12px',
+                        'font-variant-caps': 'small-caps'}),
+
+
+
+            html.A("iii. Source", href= "https://data.ontario.ca/dataset/ontario-public-schools-enrolment",
+                    target = "_blank",
+                    style = {
+                        'textAlign' : 'left',
+                        'color' :  '#D9D9D9',
+                        #'padding-left' : '30px',
+                        'font-size' : '12px',
+                        'font-variant-caps': 'small-caps'}),
+
+            html.Label("Ontario Public Schools Enrolment Dataset:",
+                    style = {
+                        'textAlign' : 'left',
+                        'color' :  '#D9D9D9',
+                        #'padding-left' : '30px',
+                        'font-size' : '12px',
+                        'font-variant-caps': 'small-caps'}),
+
+                ], className = "twelve columns", style = {"padding" : "15px",
+                                'backgroundColor' : "#04ADBF", "margin-top" : "10px"}
+                )
 
 
 
@@ -421,8 +486,15 @@ def municipality_schools(municipality):
         value = schools_in_mun,
         title = {"text" : " <br><span style = 'font-size: 1.0em; color:#595959'># SCHOOLS <br>WITH CASES</span>"},
         number = {"font" : {"size" : 42, "color" : "#04ADBF"}}))
-    figure.layout.plot_bgcolor = '#F2F4F4'
-    figure.layout.paper_bgcolor = '#F2F4F4'
+    figure.update_layout(autosize=True,
+                        margin=dict(
+                        l=10,
+                        r=10,
+                        b=20,
+                        t=50,
+                        pad=4))
+    figure.layout.plot_bgcolor = 'white'
+    figure.layout.paper_bgcolor = 'white'
     return figure
 
 # returns teh number of student cases based on the school selected
@@ -440,7 +512,7 @@ def school_metric1(school):
                 value = students,
                 #delta = {'reference' : students},
                 title = {"text" : " <br><span style = 'font-size: 1.0em; color:#FFFFFF'>STUDENT</span>"},
-                number = {"font" : {"size" : 42, "color" : "#F2F2F2"}}))
+                number = {"font" : {"size" : 42, "color" : "white"}}))
         figure.layout.plot_bgcolor = '#04ADBF'
         figure.layout.paper_bgcolor = '#04ADBF'
         return figure
@@ -459,7 +531,7 @@ def school_metric2(school):
             value = staff,
             #delta = {'reference' : staff},
             title = {"text" : " <br><span style = 'font-size: 1.0em; color:#FFFFFF'>STAFF</span>"},
-            number = {"font" : {"size" : 42, "color" : "#F2F2F2"}}))
+            number = {"font" : {"size" : 42, "color" : "white"}}))
     figure.layout.plot_bgcolor = '#04ADBF'
     figure.layout.paper_bgcolor = '#04ADBF'
     return figure
@@ -477,8 +549,15 @@ def municipality_cases(municipality):
             value = cases,
             title = {"text" : f" <span style = 'font-size: 1.0em; color:#595959'>CONFIRMED CASES IN <b><br> {municipality}:</span>"},
             number = {"font" : {"size" : 42, "color" : '#04ADBF'}}))
-    figure.layout.plot_bgcolor = '#F2F4F4'
-    figure.layout.paper_bgcolor = '#F2F4F4'
+    figure.update_layout(autosize=True,
+                        margin=dict(
+                        l=10,
+                        r=10,
+                        b=20,
+                        t=50,
+                        pad=4))
+    figure.layout.plot_bgcolor = 'white'
+    figure.layout.paper_bgcolor = 'white'
     return figure
 
 
@@ -520,8 +599,8 @@ def perc_graph(municipality):
     if municipality == "Toronto":
             figure.update_yaxes(range = [0, 110])
     figure.update_yaxes(ticksuffix="%", gridcolor = 'lightgrey', showticklabels = False)
-    figure.layout.plot_bgcolor = '#F2F2F2'
-    figure.layout.paper_bgcolor = '#F2F2F2'
+    figure.layout.plot_bgcolor = 'white'
+    figure.layout.paper_bgcolor = 'white'
     return figure
 
 
@@ -557,8 +636,8 @@ def cases_per_graph(municipality):
     #figure.update_yaxes(color = "lightgrey")
     figure.update_traces(textposition = "outside")
     figure.update_yaxes(gridcolor = 'lightgrey')
-    figure.layout.plot_bgcolor = '#F2F2F2'
-    figure.layout.paper_bgcolor = '#F2F2F2'
+    figure.layout.plot_bgcolor = 'white'
+    figure.layout.paper_bgcolor = 'white'
     return figure
 
 

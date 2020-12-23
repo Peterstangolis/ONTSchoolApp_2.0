@@ -14,14 +14,14 @@ from app import app
 from app import server
 
 # Connect to your app pages
-from apps import metrics, scl_select
+from apps import metrics, sch_select
 
 
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
     html.Div([
-        dcc.Link('Daily Metrics|', href='/apps/metrics'),
-        dcc.Link('Search by School / Municipality', href='/apps/scl_select'),
+        dcc.Link('(1) Daily Metrics |  ', href='/apps/metrics'),
+        dcc.Link('(2) Search by School - Municipality', href='/apps/sch_select'),
     ], className="row"),
     html.Div(id='page-content', children=[])
 ])
@@ -32,10 +32,10 @@ app.layout = html.Div([
 def display_page(pathname):
     if pathname == '/apps/metrics':
         return metrics.layout
-    if pathname == '/apps/scl_select':
-        return scl_select.layout
+    if pathname == '/apps/sch_select':
+        return sch_select.layout
     else:
-        return "404 Page Error! Please choose a link"
+        return "Please choose a link above to view dashboard"
 
 
 if __name__ == '__main__':

@@ -192,7 +192,9 @@ s = df_active["School"].nunique()
 
 perc_schl = round(s / schl_total, 1) * 100
 
-
+#### todays date ####
+today = datetime.datetime.now()
+today = today.strftime("%B %d, %Y")
 
 
 ## New Reported Cases Today Metric1
@@ -205,8 +207,8 @@ fig2.add_trace(go.Indicator(
         number = {"font" : {"size" : 42, 'color' : '#04ADBF'}}
     )
               ),
-fig2.layout.paper_bgcolor = '#F2F2F2'
-fig2.layout.plot_bgcolor = '#F2F2F2'
+fig2.layout.paper_bgcolor = 'white'
+fig2.layout.plot_bgcolor = 'white'
 
 ## New Student Cases Today Metric2
 fig3 = go.Figure()
@@ -220,8 +222,8 @@ fig3.add_trace(
         domain = {'row': 0, 'column' : 0},
      )
 ),
-fig3.layout.paper_bgcolor = '#F2F2F2'
-fig3.layout.plot_bgcolor = '#F2F2F2'
+fig3.layout.paper_bgcolor = 'white'
+fig3.layout.plot_bgcolor = 'white'
 
 ## New Staff Cases Today Metric3
 fig4 = go.Figure()
@@ -234,7 +236,7 @@ fig4.add_trace(
         number = {"font" : {"size" : 42, 'color': '#04ADBF'}}
     )
 ),
-fig4.layout.paper_bgcolor = '#F2F2F2'
+fig4.layout.paper_bgcolor = 'white'
 
 ## Total Schools with Active Cases Metric4
 fig5 = go.Figure()
@@ -244,9 +246,16 @@ fig5.add_trace(
         value = schools_w_cases,
         delta = {'reference' : y_schools_w_cases, 'increasing': {'color': "#BF2D17"}, 'decreasing' : {'color' : '#1D6DF2'}},
         title = {"text" : " <br><span style = 'font-size: 0.9em; color:#FFFFFF'><b>SCHOOLS W/ <br>ACTIVE CASES</span>"},
-        number = {"font" : {"size" : 42, 'color': '#F2F2F2'}}
+        number = {"font" : {"size" : 42, 'color': 'white'}}
     )
 ),
+fig5.update_layout(autosize=True,
+                    margin=dict(
+                    l=10,
+                    r=10,
+                    b=20,
+                    t=50,
+                    pad=4))
 fig5.layout.paper_bgcolor = '#04ADBF'
 
 ## Schools Closed Metric5
@@ -257,7 +266,7 @@ fig6.add_trace(
         value = value,
         delta = {'reference' : value_yest, 'increasing': {'color': "#BF2D17"}, 'decreasing' : {'color' : '#1D6DF2'}},
         title = {"text" : " <br><span style = 'font-size: 1.0emm; color:#FFFFFF'><b>SCHOOLS CLOSED</span>"},
-        number = {"font" : {"size" : 42, 'color': '#F2F2F2'}})
+        number = {"font" : {"size" : 42, 'color': 'white'}})
 ),
 fig6.layout.plot_bgcolor = '#04ADBF'
 fig6.layout.paper_bgcolor = '#04ADBF'
@@ -269,8 +278,16 @@ fig7.add_trace(
         mode = 'number',
         value = schools_w_two_or_more,
         title = {"text" : " <br><span style = 'font-size: 1.0em; color:#FFFFFF'><b>SCHOOLS WITH >= 2 <br>ACTIVE CASES</span>"},
-        number = {"font" : {"size" : 42, 'color': '#F2F2F2'}}
+        number = {"font" : {"size" : 42, 'color': 'white'}}
 )),
+
+fig7.update_layout(autosize=True,
+                    margin=dict(
+                    l=10,
+                    r=10,
+                    b=20,
+                    t=50,
+                    pad=4))
 fig7.layout.plot_bgcolor = '#04ADBF'
 fig7.layout.paper_bgcolor = '#04ADBF'
 
@@ -309,8 +326,8 @@ fig10.update_yaxes(showgrid = True, gridcolor = 'lightgrey',
                    title = "5 Day Rolling Average",
                   secondary_y = False);
 fig10.update_traces(line=dict(width=3.1, color = '#D35400'))
-fig10.layout.plot_bgcolor = '#F2F4F4'
-fig10.layout.paper_bgcolor = '#F2F4F4'
+fig10.layout.plot_bgcolor = 'white'
+fig10.layout.paper_bgcolor = 'white'
 
 
 fig11 = make_subplots(specs = [[{"secondary_y" : True}]])
@@ -334,8 +351,8 @@ fig11.update_layout(font = dict(
                             color = "#595959",
                             size = 14
                     ))
-fig11.layout.plot_bgcolor = '#F2F2F2'
-fig11.layout.paper_bgcolor = '#F2F2F2'
+fig11.layout.plot_bgcolor = 'white'
+fig11.layout.paper_bgcolor = 'white'
 
 
 layout = html.Div(
@@ -588,7 +605,7 @@ layout = html.Div(
                                     'margin-right' : '10px',
                                     'margin-left' : '10px',
                                     'textAlign' : 'left',
-                                    'width' : '80%'}
+                                    'width' : '80%', "backgroundColor" : "white"}
                             ),
 
                  html.Label("CUMULATIVE COVID-19 CASES IN ONTARIO SCHOOLS VS DAILY REPORTED CASE TOTALS",
@@ -627,15 +644,20 @@ layout = html.Div(
 
     html.Div([
         html.Footer(""),
-        html.P("*The data for the metrics and graphs were aquired from the Government of Ontario's Website below:",
-                style = {"font-size" : "14", 'fontFamily' : 'Helvetica', 'color' : '#D9D9D9'}),
+        html.Label(f"Today's Date: {today}",
+        style = {"font-size" : "14", 'fontFamily' : 'Helvetica', 'color' : '#D9D9D9', 'font-variant-caps': 'small-caps'}),
+        html.P("Created By: Peter Stangolis",
+        style = {"font-size" : "14", 'fontFamily' : 'Helvetica', 'color' : '#D9D9D9', 'font-variant-caps': 'small-caps'}),
+
+        html.P("*The data for the metrics and graphs were aquired from the Government of Ontario's Website",
+                style = {"font-size" : "14", 'fontFamily' : 'Helvetica', 'color' : '#D9D9D9', 'font-variant-caps': 'small-caps'}),
         html.A("Source", href="https://data.ontario.ca/dataset/summary-of-cases-in-schools",
                     target = "_blank",
                     style = {
                         'textAlign' : 'center',
                         'color' :  '#D9D9D9',
                         #'padding-left' : '30px',
-                        'font-size' : '18px',
+                        'font-size' : '14px',
                         'font-variant-caps': 'small-caps'
                     })
                     ], style = {"padding-left" : "30px", 'backgroundColor' : "#04ADBF", "padding-top" : "10px", "padding-bottom" : "10px"}
@@ -681,7 +703,7 @@ def update_line(selection):
 
     figure.add_trace(trace2, secondary_y = True)
 
-    figure.update_layout(legend = dict(x=0.1, y=0.9), hovermode='x')
+    figure.update_layout(legend = dict(x=0.1, y=1.11), hovermode='x')
 
     figure.update_xaxes(tickangle= 0, autorange=True,
                         rangebreaks = [
@@ -693,12 +715,12 @@ def update_line(selection):
     figure.update_yaxes(showgrid = True, gridcolor = 'lightgrey', title = "Cumulative Cases", secondary_y = True, title_font=dict(size = 14, family = "Helvetica"))
 
     figure.update_layout(#title = f"{new} vs {cu}",
-                        legend = dict(bgcolor = 'lightgrey'),
+                        legend = dict(bgcolor = '#F2F2F2'),
                         font = dict(
                                 family = 'Helvetica',
                                 size = 14,
                                 color = '#595959'))
-    figure.layout.paper_bgcolor = '#F2F2F2'
-    figure.layout.plot_bgcolor = '#F2F2F2'
+    figure.layout.paper_bgcolor = 'white'
+    figure.layout.plot_bgcolor = 'white'
 
     return figure
