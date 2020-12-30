@@ -648,18 +648,17 @@ layout = html.Div(
         style = {"font-size" : "14", 'fontFamily' : 'Helvetica', 'color' : '#D9D9D9', 'font-variant-caps': 'small-caps'}),
         html.P("Created By: Peter Stangolis",
         style = {"font-size" : "14", 'fontFamily' : 'Helvetica', 'color' : '#D9D9D9', 'font-variant-caps': 'small-caps'}),
-
-        html.P("*The data for the metrics and graphs were aquired from the Government of Ontario's Website",
-                style = {"font-size" : "14", 'fontFamily' : 'Helvetica', 'color' : '#D9D9D9', 'font-variant-caps': 'small-caps'}),
         html.A("Source", href="https://data.ontario.ca/dataset/summary-of-cases-in-schools",
                     target = "_blank",
                     style = {
                         'textAlign' : 'center',
-                        'color' :  '#D9D9D9',
+                        #'color' :  '#D9D9D9',
                         #'padding-left' : '30px',
-                        'font-size' : '14px',
+                        'font-size' : '12px',
                         'font-variant-caps': 'small-caps'
-                    })
+                    }),
+        html.Label("*The data for the metrics and graphs were aquired from the Government of Ontario's Website below:",
+                style = {"font-size" : "12", 'fontFamily' : 'Helvetica', 'color' : '#D9D9D9', 'font-variant-caps': 'small-caps'})
                     ], style = {"padding-left" : "30px", 'backgroundColor' : "#04ADBF", "padding-top" : "10px", "padding-bottom" : "10px"}
                     )
 

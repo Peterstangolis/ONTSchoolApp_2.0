@@ -406,7 +406,7 @@ layout = html.Div(
                         target = "_blank",
                         style = {
                             'textAlign' : 'left',
-                            'color' :  '#D9D9D9',
+                            #'color' :  '#D9D9D9',
                             #'padding-left' : '30px',
                             'font-size' : '12px',
                             'font-variant-caps': 'small-caps'
@@ -424,7 +424,7 @@ layout = html.Div(
                     target = "_blank",
                     style = {
                         'textAlign' : 'center',
-                        'color' :  '#D9D9D9',
+                        #'color' :  '#D9D9D9',
                         #'padding-left' : '30px',
                         'font-size' : '12px',
                         'font-variant-caps': 'small-caps'}),
@@ -443,7 +443,7 @@ layout = html.Div(
                     target = "_blank",
                     style = {
                         'textAlign' : 'left',
-                        'color' :  '#D9D9D9',
+                        #'color' :  '#D9D9D9',
                         #'padding-left' : '30px',
                         'font-size' : '12px',
                         'font-variant-caps': 'small-caps'}),
@@ -659,4 +659,4 @@ Input("munic-input", "value"))
 
 def muni_return(muni):
     muni = muni.upper()
-    return f"% of Schools in {muni} with at least 1 Confirmed, Active COVID-19 Case"
+    return f"% of Schools in {muni} Boards with at least 1 Confirmed, Active COVID-19 Case"
