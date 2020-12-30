@@ -657,7 +657,7 @@ layout = html.Div(
                         'font-size' : '12px',
                         'font-variant-caps': 'small-caps'
                     }),
-        html.Label("*The data for the metrics and graphs were aquired from the Government of Ontario's Website below:",
+        html.Label("*The data for the metrics and graphs were aquired from the Government of Ontario's Website",
                 style = {"font-size" : "12", 'fontFamily' : 'Helvetica', 'color' : '#D9D9D9', 'font-variant-caps': 'small-caps'})
                     ], style = {"padding-left" : "30px", 'backgroundColor' : "#04ADBF", "padding-top" : "10px", "padding-bottom" : "10px"}
                     )
