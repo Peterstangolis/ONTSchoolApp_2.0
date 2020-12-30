@@ -595,7 +595,7 @@ def perc_graph(municipality):
     figure.update(layout_coloraxis_showscale=False)
     figure.update_layout(xaxis_title = "", yaxis_title = "% of Schools",
                         font=dict(family = "Helvetica", size = 14, color = '#595959'))
-    figure.update_traces(textposition = "outside", texttemplate = "%{y:.1f}%")
+    figure.update_traces(textposition = "auto", texttemplate = "%{y:.1f}%", textfont = dict(color = 'black'))
     if municipality == "Toronto":
             figure.update_yaxes(range = [0, 110])
     figure.update_yaxes(ticksuffix="%", gridcolor = 'lightgrey', showticklabels = False)
@@ -634,7 +634,7 @@ def cases_per_graph(municipality):
     figure.update_layout(xaxis_title = "", yaxis_title = "COVID-19 Cases (per 100k)",
                         font=dict(family = "Helvetica", size = 14, color = '#595959'), uniformtext_minsize=12)
     #figure.update_yaxes(color = "lightgrey")
-    figure.update_traces(textposition = "outside")
+    figure.update_traces(textposition = "inside", textfont = dict(color = 'black'))
     figure.update_yaxes(gridcolor = 'lightgrey')
     figure.layout.plot_bgcolor = 'white'
     figure.layout.paper_bgcolor = 'white'
